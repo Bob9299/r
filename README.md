@@ -38,3 +38,7 @@ you will need (1) to put in the final slash in the URL, and (2) to avoid convert
 spaces-'%20'-in the URL, instead placing a hyphen.
 
 **Note:** An alternative is to use the excellent [holepunch package for R](https://karthik.github.io/holepunch/articles/getting_started.html).
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Bob9299/r/master)
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/Bob9299/r/master
