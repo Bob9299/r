@@ -42,3 +42,8 @@ spaces-'%20'-in the URL, instead placing a hyphen.
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Bob9299/r/master)
 .. image:: https://mybinder.org/badge_logo.svg
  :target: https://mybinder.org/v2/gh/Bob9299/r/master
+ 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Bob9299/r/master)
+Copy markdown link to clipboard
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/Bob9299/r/master
