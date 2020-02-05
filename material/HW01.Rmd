@@ -1,0 +1,164 @@
+---
+title: "HW1"
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Homework1
+> Group 10 (Zili Huang, Jiabo Cheng)
+
+## Problem 1 (Forest Fires)
+### a)
+```{r a, echo=TRUE}
+ff_f<- read.csv("forestfires.csv")
+library(ggplot2)
+p1 <- ggplot(ff_f) + geom_point(aes(x = temp, y = area), colour = "black", alpha = 0.5) + ggtitle("area vs. temp")
+p2 <- ggplot(ff_f) + geom_point(aes(x = month, y = area), colour = "black", alpha = 0.5) + ggtitle("area vs month")
+p3 <- ggplot(ff_f) + geom_point(aes(x = DC, y = area), colour = "black", alpha = 0.5) + ggtitle("area vs DC")
+p4 <- ggplot(ff_f) + geom_point(aes(x = RH, y = area), colour = "black", alpha = 0.5) + ggtitle("area vs RH")
+library(gridExtra)
+grid.arrange(p1,p2, p3, p4, nrow=2)
+```
+
+### b)
+
+```{r b}
+ggplot(ff_f) + geom_histogram(aes(x = wind),binwidth = 1, alpha = 0.8,colour = "black", fill = "lightblue")+ labs(title = "Histogram of wind speed(km/h)", x = "Wind Speed(km/h)", y = "Density")
+```
+
+### c)
+```{r c}
+ summary(ff_f$wind)
+```
+
+### d)
+```{r d}
+ ggplot(ff_f) + geom_histogram(aes(x = wind,y = ..density..),binwidth = 1, alpha = 0.8, colour = "black", fill = "white")+ labs(title = "Histogram of wind speed(km/h)", x = "Wind Speed(km/h)", y = "Density") + geom_density(aes(x= wind),alpha = 0.3, fill = "pink")
+```
+
+### e)
+```{r e}
+ggplot(ff_f, aes(wind))+ geom_density(aes(fill = factor(month)),alpha=.3)+ labs(title = "Density of wind speed by month(km/h)", x = "Wind Speed(km/h)", y = "Density", fill = "Month")
+```
+
+### f)
+```{r f}
+library(GGally)
+ggpairs(ff_f[, c("temp","RH","DC","DMC")])
+```
+
+> Based on the plots above, the temp and RH has negative linear relationship, the temp and DC, temp and DMC, DC and DMC have positive linear relationship.
+
+### g)
+```{r g}
+p1 <- ggplot(ff_f) + geom_boxplot(aes(y= temp))
+p2 <- ggplot(ff_f) + geom_boxplot(aes(y= ISI))
+p3 <- ggplot(ff_f) + geom_boxplot(aes(y= DC))
+grid.arrange(p1,p2, p3,  nrow=1)
+```
+
+> All the boxplots have outliers. Since all of them have large ranges. 
+
+### h)
+```{r h}
+p1 <- ggplot(ff_f) + geom_histogram(aes(x = DMC), alpha = 0.8,colour = "black", fill = "lightblue") + labs(title = "Histogram of DMC", x = "DMC", y = "Frequency")
+p2 <- ggplot(ff_f) + geom_histogram(aes(x = DMC), alpha = 0.8,colour = "black", fill = "lightblue") + scale_x_log10() + labs(title = "Histogram of log of DMC", x = "log of DMC", y = "Frequency")
+grid.arrange(p1,p2, nrow = 1)
+ 
+```
+
+> The distribution of log of DMC seems like a normal distribution.
+
+## Problem 2 (Twitter Accounts)
+### a)
+```{r a2}
+tw_f <- read.csv("M01_quasi_twitter.csv")
+ggplot(tw_f) + geom_histogram(aes(x= friends_count)) + labs(title = "Density of the friends count")
+ggplot(tw_f) + geom_boxplot(aes(y = friends_count)) + labs(title = "Boxplot of the friends count")
+```
+
+> Most of data of frends_count are concentrate on the left of the plot.
+
+### b)
+```{r b2}
+summary(tw_f$friends_count)
+```
+
+### c)
+```{r c2}
+```
+
+> I believe the quality of the friend_count data is poor. Since there're too many outliers which make analyzation hard. 
+
+### d)
+```{r d2}
+library("scatterplot3d")
+scatterplot3d(tw_f$created_at_year, tw_f$education, tw_f$age, main = "3D Scatter Plot", xlab = "Created at year", ylab = "Education", zlab = "Age", color = "steelblue")
+```
+
+### e)
+```{r e2}
+par(mfcol=c(1,2))
+ac <- c(650,1000,900,300,14900)
+ct <- c("UK","Canada","India","Australia","US")
+label <- paste(ct, " ", round(ac/sum(ac)*100), "%", sep="")
+pie(ac,labels = label, main = "Pie chart")
+
+library("plotrix")
+pie3D(ac, labels = label, main = "3D Pie chart", col = c("bisque","pink","aquamarine2","white","lightblue"))
+```
+
+### f)
+```{r f2}
+ggplot(tw_f) + geom_density(aes(x= created_at_year), alpha = 0.3, fill = "pink") +labs(title = "Kernel density plot of created at year", x = "Created at Year", y = "Density")
+```
+
+> We could easily found the first year of most account created is 2009, and the second is 2014.
+
+
+## Problem 3
+### a)
+```{r a3}
+rd_f <- read.csv("raw_data.csv")
+Ndata <- data.frame(scale(rd_f))
+```
+
+### b)
+```{r b3}
+p1 <- ggplot(rd_f) + geom_boxplot(aes(y = A))
+p2 <- ggplot(rd_f) + geom_boxplot(aes(y = B))
+p3 <- ggplot(rd_f) + geom_boxplot(aes(y = C))
+p4 <- ggplot(rd_f) + geom_boxplot(aes(y = D))
+grid.arrange(p1,p2,p3,p4, ncol=4)
+```
+
+### c)
+```{r c3}
+p1 <- ggplot(Ndata) + geom_boxplot(aes(y = A))
+p2 <- ggplot(Ndata) + geom_boxplot(aes(y = B))
+p3 <- ggplot(Ndata) + geom_boxplot(aes(y = C))
+p4 <- ggplot(Ndata) + geom_boxplot(aes(y = D))
+grid.arrange(p1,p2,p3,p4, ncol=4)
+```
+
+### d)
+```{r d3}
+ 
+```
+
+> After the standardization, it would be easier to compare the variables in the dataset,......
+
+
+### e)
+```{r e3}
+ggpairs(rd_f[, c("A","B")])
+ 
+```
+
+> There's no correlation between A and B.
